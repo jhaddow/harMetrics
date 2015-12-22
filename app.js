@@ -10,8 +10,15 @@ app.use(express.static(_dirname + '/client'));
 
 app.listen(port, function(){
   console.log('listening on port ' + port + ' with version ' + process.version);
+
+});
+
+app.get('/api/getData', function(req, res){
   readFile.run()
     .then(function(data){
-      console.log(data);
+      res.status(200).json(data);
+    })
+    .catch(function(err){
+      res.status(500).json(err);
     });
 });

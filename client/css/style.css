@@ -1,0 +1,20 @@
+.grid {
+    width: 80%%;
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 75vh;
+}
+
+.header{
+    width: 80%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.footer{
+    width:80%;
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+}

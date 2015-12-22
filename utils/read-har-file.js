@@ -10,10 +10,7 @@ module.exports.run = function(){
       return JSON.parse(data);
     })
     .then(function(data){
-      return groupData(data);
-    })
-    .then(function(data){
-      return categorize(data);
+      return _.sortBy(data.log.entries, 'startedDateTime');
     })
     .catch(function(err){
       throw new Error(err);

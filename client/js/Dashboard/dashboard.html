@@ -1,1 +1,9 @@
-<div>{{vm.title}}</div>
+<div class="header">Metrics for Github.com</div>
+
+<div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
+<div class="footer">
+    <div>Number of Requests: {{vm.data.numReq}}</div>
+    <div>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
+    <div>Total Downloaded: {{vm.data.totalDown}} bytes</div>
+    <div>Total Time to Load: {{vm.data.totalTime}} ms</div>
+</div>

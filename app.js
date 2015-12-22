@@ -1,13 +1,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var fs = require('fs');
+var readFile = require('./utils/read-har-file');
 
 var app = express();
 var port = process.env.PORT || 9901;
 app.use(bodyParser.json());
-
+app.use(express.static(_dirname + '/client'));
 
 
 app.listen(port, function(){
-  console.log('listening on port ' + port);
-})
+  console.log('listening on port ' + port + ' with version ' + process.version);
+  readFile.run()
+    .then(function(data){
+      console.log(data);
+    });
+});

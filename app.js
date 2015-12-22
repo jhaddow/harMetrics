@@ -5,7 +5,7 @@ var readFile = require('./utils/read-har-file');
 var app = express();
 var port = process.env.PORT || 9901;
 app.use(bodyParser.json());
-app.use(express.static(_dirname + '/client'));
+app.use(express.static(__dirname + '/client'));
 
 
 app.listen(port, function(){

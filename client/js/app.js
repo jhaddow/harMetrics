@@ -6,7 +6,7 @@
 
   angular
     .module('harMetrics', [
-      'ng-route'
+      'ngRoute'
     ]).config(config);
 
   config.$inject = ['$routeProvider'];
@@ -15,7 +15,7 @@
   function config ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: '/',
+        templateUrl: 'js/Dashboard/dashboard.html',
         controller: 'DashboardCtrl',
         controllerAs: 'vm'
       });

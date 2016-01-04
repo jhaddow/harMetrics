@@ -1,25 +1,35 @@
-.container{
+.main-container{
     display:flex;
-    flex-direction: row;
+    flex-direction:row;
+    min-height: 100vh;
 }
 
 .sideBar{
+    height: 100%;
     width: 15%;
     min-width: 150px;
+    display: flex;
     flex-direction: column;
 }
+
+.percentages-menu {
+    height: 50%;
+}
+
+.categories-options {
+    height: 50%;
+}
+
+.main{
+    width: 75%;
+}
+
 
 .grid {
     width: 80%%;
     max-width: 1000px;
     margin: 0 auto;
     height: 75vh;
-}
-
-.header{
-    width: 80%;
-    max-width: 1000px;
-    margin: 0 auto;
 }
 
 .footer{
@@ -29,9 +39,12 @@
     display: flex;
     justify-content: space-around;
 }
-
+.upload{
+    text-align: center;
+}
 .upload-btn{
     font-size: 20px;
     background: lightblue;
+    margin: 0 auto;
 
 }

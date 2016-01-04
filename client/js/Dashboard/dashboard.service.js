@@ -8,14 +8,15 @@
     .module('harMetrics')
     .factory('DashboardService', DashboardService);
 
-  DashboardService.$inject = ['$http', '$q'];
+  DashboardService.$inject = ['$q'];
   /* @ngInject */
-  function DashboardService($http, $q)
+  function DashboardService($q)
   {
     var _data;
 
     var service = {
-      readFile: readFile
+      readFile: readFile,
+      createPieData: createPieData
     };
     return service;
 
@@ -80,29 +81,43 @@
 
   function createPieData(data, targetField){
     var targetFieldMap = {
-      'Total Time' : 'time',
-      'Wait Time' : 'timings.wait',
-      'Send Time' : 'timings.send',
-      'Receive Time': 'timings.receive',
-      'Total Size': 'totalSize',
-      'Request Size': 'reqSize',
-      'Response Size': 'response._transferSize'
+      'Total Time' : { field: 'time', unit: 'ms'},
+      'Wait Time' : {field: 'timings.wait', unit: 'ms'},
+      'Send Time' : {field: 'timings.send', unit: 'ms'},
+      'Receive Time': {field: 'timings.receive', unit: 'ms'},
+      'Total Size': {field: 'totalSize', unit: 'Kb'},
+      'Request Size': {field: 'reqSize', unit: 'Kb'},
+      'Response Size': {field: 'response._transferSize', unit: 'Kb'}
     };
 
-    var map = _.groupBy(data, 'category');
+
+    var categoryMap = _.groupBy(data, 'category');
     var labels = [];
     var values = [];
-
-    _.each(map, function(array, category){
+    var target = targetFieldMap[targetField];
+    _.each(categoryMap, function(array, category){
       labels.push(category);
       var total = 0;
       _.each(array, function(item){
-        total += _.get(item, targetFieldMap[targetField]);
+
+        total += _.get(item, target.field);
       });
-      values.push(Math.round(total));
+
+      var value = target.unit === 'ms' ? Math.round(total) : Math.round(total/1000);
+      values.push(value);
     });
 
-    return {labels: labels, data: values};
+
+
+    return {
+      labels: labels,
+      data: values,
+      options: {
+        tooltipTemplate: function (data) {
+          return data.label + ': ' + data.value.toString() + ' ' + target.unit
+        }
+      }
+    };
   }
 })();
 

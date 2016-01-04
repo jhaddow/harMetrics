@@ -12,22 +12,24 @@
     </div>
 
     <div class="main">
-        <div class="upload" ng-show="!fileUploaded" >
+        <div class="upload" ng-show="!vm.fileUploaded" >
             <button class="upload-btn" ng-click="vm.uploadFile()">Upload File</button>
             <input id="fileGrab" type="file" name="har" hidden accept="*/*">
         </div>
 
-
-
-        <canvas id="pie" class="chart chart-pie"
-                chart-data="vm.pieData.data" chart-labels="vm.pieData.labels" chart-legend="true">
+        <canvas ng-show="vm.showPieChart" id="pie" class="chart chart-pie"
+                chart-data="vm.pieData.data" chart-labels="vm.pieData.labels" chart-legend="true" chart-options="vm.pieData.options">
         </canvas>
-        <div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
-        <div class="footer">
-            <div>Number of Requests: {{vm.data.numReq}}</div>
-            <div>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
-            <div>Total Downloaded: {{vm.data.totalDown}} bytes</div>
-            <div>Total Time to Load: {{vm.data.totalTime}} ms</div>
+
+
+        <div ng-show="!vm.showPieChart">
+            <div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
+            <div class="footer">
+                <div>Number of Requests: {{vm.data.numReq}}</div>
+                <div>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
+                <div>Total Downloaded: {{vm.data.totalDown}} bytes</div>
+                <div>Total Time to Load: {{vm.data.domLoadTime}} ms</div>
+            </div>
         </div>
     </div>
 </div>

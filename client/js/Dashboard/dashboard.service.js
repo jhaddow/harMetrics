@@ -77,8 +77,9 @@
       return acc;
     }, {numReq: 0, totalUpload: 0, totalDown: 0, totalTime: 0, totalSendTime: 0, totalReceiveTime: 0, totalWaitTime: 0, requests: []});
 
-    var startTime = moment(data[0].startedDateTime);
-    var endTime = moment(data[data.length -1].startedDateTime).add(data[data.length - 1].time, 'ms');
+    var sorted = _.sortBy(data, 'startedDateTime');
+    var startTime = moment(sorted[0].startedDateTime);
+    var endTime = moment(sorted[data.length -1].startedDateTime).add(data[data.length - 1].time, 'ms');
     result.domLoadTime = Math.round(endTime.diff(startTime));
     return result;
   }

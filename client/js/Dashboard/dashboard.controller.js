@@ -41,18 +41,7 @@
     var fileGrab = document.querySelector('input[id=fileGrab]');
     fileGrab.onchange = fileGrabOnChange;
 
-
-    //activate();
-
-    ////////////////
-
-    //function activate() {
-    //  DashboardService.getData()
-    //    .then(function(data){
-    //      vm.data = data;
-    //      vm.gridOptions.data = data.requests;
-    //    })
-    //}
+    //////////////////////////////////////
 
     function togglePieChart(){
       vm.showPieChart = !vm.showPieChart;

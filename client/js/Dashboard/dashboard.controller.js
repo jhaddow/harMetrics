@@ -11,17 +11,21 @@
   function DashboardCtrl($timeout, DashboardService) {
     var vm = this;
     vm.title = 'DashboardCtrl';
+
+    //ui-grid column definitions
     vm.columns = [
-      {field: 'method', title: 'Method', width: 90},
-      {field: 'request', title: 'Request'},
-      {field: 'response', title: 'Response', width: 90},
-      {field: 'reqSize', title: 'Req. Size', width: 90},
-      {field: 'resSize', title: 'Res. Size', width: 90},
-      {field: 'totalTime', title: 'Total Time', width: 90}
+      {field: 'request.method', displayName: 'Method', width: 90},
+      {field: 'request.url', displayName: 'Request'},
+      {field: 'response.status', displayName: 'Response', width: 90},
+      {field: 'reqSize', displayName: 'Req. Size', width: 90},
+      {field: 'response._transferSize', displayName: 'Res. Size', width: 90},
+      {field: 'displayTime', displayName: 'Time (ms)', width: 90}
     ];
     vm.gridOptions = {
-      columnDefs: vm.columns,
+      columnDefs: vm.columns
     };
+
+    //for uploading a file
     vm.uploadFile = uploadFile;
     var fileGrab = document.querySelector('input[id=fileGrab]');
     fileGrab.onchange = fileGrabOnChange;
@@ -31,13 +35,13 @@
 
     ////////////////
 
-    function activate() {
-      DashboardService.getData()
-        .then(function(data){
-          vm.data = data;
-          vm.gridOptions.data = data.requests;
-        })
-    }
+    //function activate() {
+    //  DashboardService.getData()
+    //    .then(function(data){
+    //      vm.data = data;
+    //      vm.gridOptions.data = data.requests;
+    //    })
+    //}
 
     function fileGrabOnChange () {
       processData(fileGrab);
@@ -56,11 +60,14 @@
 
       DashboardService.readFile(fileGrab.files[0])
         .then(function(data){
-          vm.data = data;
-          vm.gridOptions.data = data.requests;
+          vm.data = data.gridData;
+          vm.gridOptions.data = data.gridData.requests;
+          vm.pieData = data.pieData;
           console.log(data);
         })
     }
+
+
 
   }
 

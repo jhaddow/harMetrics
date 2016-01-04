@@ -33,7 +33,7 @@ node_modules
 .DS_STORE
 
 #bower stuff
-bower_components
+client/bower_components
 
 
 

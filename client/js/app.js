@@ -7,7 +7,8 @@
   angular
     .module('harMetrics', [
       'ngRoute',
-      'ui.grid'
+      'ui.grid',
+      'chart.js'
     ]).config(config);
 
   config.$inject = ['$routeProvider'];

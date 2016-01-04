@@ -17,7 +17,11 @@
             <input id="fileGrab" type="file" name="har" hidden accept="*/*">
         </div>
 
-        <canvas id="pieChart"></canvas>
+
+
+        <canvas id="pie" class="chart chart-pie"
+                chart-data="vm.pieData.data" chart-labels="vm.pieData.labels" chart-legend="true">
+        </canvas>
         <div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
         <div class="footer">
             <div>Number of Requests: {{vm.data.numReq}}</div>

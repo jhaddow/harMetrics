@@ -32,4 +32,8 @@ node_modules
 *.xml
 .DS_STORE
 
+#bower stuff
+bower_components
+
+
 

@@ -1,0 +1,16 @@
+{
+  "name": "harMetrics",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jhaddow/harMetrics",
+  "authors": [
+    "Jess Haddow <jess.haddow@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

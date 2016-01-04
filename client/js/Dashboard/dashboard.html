@@ -1,9 +1,30 @@
-<div class="header">Metrics for Github.com</div>
+<div class=".container">
 
-<div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
-<div class="footer">
-    <div>Number of Requests: {{vm.data.numReq}}</div>
-    <div>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
-    <div>Total Downloaded: {{vm.data.totalDown}} bytes</div>
-    <div>Total Time to Load: {{vm.data.totalTime}} ms</div>
+    <div class="sideBar">
+        <div class="percentages-menu">
+            Calculate Percentages by:
+            <ul class="option" ng-repeat="item in vm.percentageOptions" ng-click="recalcPercentages(item.value)">{{item.label}}</ul>
+        </div>
+        <div class="category-details">
+            View Details by Category:
+            <ul class="option" ng-repeat="item in vm.categoryOptions" ng-click="filterDataByCategory(item.value)">{{item.label}}</ul>
+        </div>
+    </div>
+
+    <div class="main">
+        <div class="header">Metrics</div>
+
+        <div ng-show="!fileUploaded" >
+            <button class="upload-btn" ng-click="vm.uploadFile()">Upload File</button>
+            <input id="fileGrab" type="file" name="har" hidden accept="*/*">
+        </div>
+
+        <div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
+        <div class="footer">
+            <div>Number of Requests: {{vm.data.numReq}}</div>
+            <div>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
+            <div>Total Downloaded: {{vm.data.totalDown}} bytes</div>
+            <div>Total Time to Load: {{vm.data.totalTime}} ms</div>
+        </div>
+    </div>
 </div>

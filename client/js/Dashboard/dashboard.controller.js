@@ -5,10 +5,10 @@
     .module('harMetrics')
     .controller('DashboardCtrl', DashboardCtrl);
 
-  DashboardCtrl.$inject = ['DashboardService'];
+  DashboardCtrl.$inject = ['$timeout', 'DashboardService'];
 
   /* @ngInject */
-  function DashboardCtrl(DashboardService) {
+  function DashboardCtrl($timeout, DashboardService) {
     var vm = this;
     vm.title = 'DashboardCtrl';
     vm.columns = [
@@ -22,7 +22,12 @@
     vm.gridOptions = {
       columnDefs: vm.columns,
     };
-    activate();
+    vm.uploadFile = uploadFile;
+    var fileGrab = document.querySelector('input[id=fileGrab]');
+    fileGrab.onchange = fileGrabOnChange;
+
+
+    //activate();
 
     ////////////////
 
@@ -33,6 +38,30 @@
           vm.gridOptions.data = data.requests;
         })
     }
+
+    function fileGrabOnChange () {
+      processData(fileGrab);
+    }
+
+    function uploadFile (){
+      $timeout(function(){
+        fileGrab.click();
+      });
+    }
+
+    function processData(fileGrab){
+      if(!fileGrab.files.length){
+        return;
+      }
+
+      DashboardService.readFile(fileGrab.files[0])
+        .then(function(data){
+          vm.data = data;
+          vm.gridOptions.data = data.requests;
+          console.log(data);
+        })
+    }
+
   }
 
 })();

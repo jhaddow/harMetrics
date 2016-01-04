@@ -8,12 +8,13 @@
     .module('harMetrics')
     .factory('DashboardService', DashboardService);
 
-  DashboardService.$inject = ['$http'];
+  DashboardService.$inject = ['$http', '$q'];
   /* @ngInject */
-  function DashboardService($http)
+  function DashboardService($http, $q)
   {
     var service = {
-      getData: getData
+      getData: getData,
+      readFile: readFile
     };
     return service;
 
@@ -26,13 +27,33 @@
           return transFormData(data.data);
         });
     }
+
+    function readFile(file) {
+      var dfd = $q.defer();
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var data = JSON.parse(e.target.result);
+        dfd.resolve(transFormData(data.log.entries));
+      };
+
+      reader.onerror = function(e){
+        dfd.reject(e.target.error);
+      };
+
+      reader.readAsText(file);
+
+      return dfd.promise;
+    }
   }
+
+
 
   function transFormData(data){
     var result = data.reduce(function(accumulator, item){
       accumulator.numReq++
       accumulator.totalUpload += item.request.headersSize;
       accumulator.totalDown += item.response._transferSize;
+      accumulator.totalTime2 += item.time;
 
       var obj = {
         method: item.request.method,
@@ -45,7 +66,7 @@
       accumulator.requests.push(obj);
 
       return accumulator;
-    }, {numReq: 0, totalUpload: 0, totalDown: 0, requests: []});
+    }, {numReq: 0, totalUpload: 0, totalDown: 0, totalTime2: 0, requests: []});
 
     var startTime = moment(data[0].startedDateTime);
     var endTime = moment(data[data.length -1].startedDateTime).add(data[data.length - 1].time, 'ms');

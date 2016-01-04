@@ -1,35 +1,60 @@
-<div class="main-container">
+<!--<div class="boxWithHeight" layout="row">-->
 
-    <div class="sideBar">
-        <div class="percentages-menu">
-            Calculate Percentages by:
-            <ul class="option" ng-repeat="item in vm.percentageOptions" ng-click="recalcPercentages(item.value)">{{item.label}}</ul>
-        </div>
-        <div class="category-details">
-            View Details by Category:
-            <ul class="option" ng-repeat="item in vm.categoryOptions" ng-click="filterDataByCategory(item.value)">{{item.label}}</ul>
-        </div>
-    </div>
+    <!--<div layout="column" flex="20" layout-padding class="boxWithHeight">-->
+        <!--<section flex="50">-->
+            <!--Calculate Percentages by:-->
+            <!--<ul class="option" ng-repeat="item in vm.percentageOptions" ng-click="recalcPercentages(item.value)">{{item.label}}</ul>-->
+        <!--</section>-->
+        <!--<section flex>-->
+            <!--View Details by Category:-->
+            <!--<ul class="option" ng-repeat="item in vm.categoryOptions" ng-click="filterDataByCategory(item.value)">{{item.label}}</ul>-->
+        <!--</section>-->
+    <!--</div>-->
 
-    <div class="main">
+
+    <div layout="column" layout-padding class="boxWithHeight">
         <div class="upload" ng-show="!vm.fileUploaded" >
-            <button class="upload-btn" ng-click="vm.uploadFile()">Upload File</button>
-            <input id="fileGrab" type="file" name="har" hidden accept="*/*">
+            <!-- Accent-colored raised button with ripple -->
+            <md-button class="md-raised md-primary" ng-click="vm.uploadFile()">Upload</md-button>
+            <input id="fileGrab" type="file" name="har" hidden accept=".har">
         </div>
 
-        <canvas ng-show="vm.showPieChart" id="pie" class="chart chart-pie"
-                chart-data="vm.pieData.data" chart-labels="vm.pieData.labels" chart-legend="true" chart-options="vm.pieData.options">
-        </canvas>
+        <div flex="50">
+            <md-toolbar ng-if="vm.fileUploaded" class="menu-bar">
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>Calculate Percentages By: </span>
+                    </h2>
+                    <md-button class="md-raised" ng-repeat="btn in vm.calcPercentagesList" ng-click="vm.calcPercentages(btn)">
+                        {{btn}}
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <br>
+            <canvas id="pie" class="chart chart-pie"
+                    chart-data="vm.pieData.data" chart-labels="vm.pieData.labels" chart-legend="true" chart-options="vm.pieData.options">
+            </canvas>
+        </div>
 
 
-        <div ng-show="!vm.showPieChart">
-            <div id="grid1" ui-grid="vm.gridOptions" class="grid"></div>
-            <div class="footer">
-                <div>Number of Requests: {{vm.data.numReq}}</div>
-                <div>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
-                <div>Total Downloaded: {{vm.data.totalDown}} bytes</div>
-                <div>Total Time to Load: {{vm.data.domLoadTime}} ms</div>
+        <section flex layout="column"ng-if="vm.fileUploaded" layout-align="center center">
+            <md-toolbar class="menu-bar">
+                <div class="md-toolbar-tools">
+                    <h2>
+                        <span>View Details By Category: </span>
+                    </h2>
+                    <md-button class="md-raised" ng-repeat="category in vm.categoryList" ng-click="vm.filterCategory(category)">
+                        {{category}}
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <br>
+            <div id="grid1" ui-grid="vm.gridOptions" class="grid" flex="80"></div>
+            <div flex="20" layout="row" layout-align="space-between">
+                <div flex>Number of Requests: {{vm.data.numReq}}</div>
+                <div flex>Total Uploaded: {{vm.data.totalUpload}} bytes</div>
+                <div flex>Total Downloaded: {{vm.data.totalDown}} bytes</div>
+                <div flex>Total Time to Load: {{vm.data.domLoadTime}} ms</div>
             </div>
-        </div>
+        </section>
     </div>
-</div>

@@ -16,7 +16,8 @@
 
     var service = {
       readFile: readFile,
-      createPieData: createPieData
+      calcPercentages: calcPercentages,
+      filterCategory: filterCategory
     };
     return service;
 
@@ -39,6 +40,19 @@
       reader.readAsText(file);
 
       return dfd.promise;
+    }
+
+    function calcPercentages(targetField){
+      return createPieData(_data.requests, targetField);
+    }
+
+    function filterCategory(category){
+      if(category === 'all'){
+        return _data;
+      }
+      return createGridData(_.filter(_data.requests, function(item){
+        return item.category === category;
+      }));
     }
   }
 
@@ -113,9 +127,9 @@
       labels: labels,
       data: values,
       options: {
-        tooltipTemplate: function (data) {
-          return data.label + ': ' + data.value.toString() + ' ' + target.unit
-        }
+        tooltipTemplate: "<%if (label){%><%=label%>: <%}%><%= value %> " + target.unit,
+        maintainAspectRatio: false
+
       }
     };
   }

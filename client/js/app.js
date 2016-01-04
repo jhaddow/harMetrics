@@ -8,7 +8,8 @@
     .module('harMetrics', [
       'ngRoute',
       'ui.grid',
-      'chart.js'
+      'chart.js',
+      'ngMaterial'
     ]).config(config);
 
   config.$inject = ['$routeProvider'];

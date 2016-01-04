@@ -16,6 +16,12 @@
     vm.showPieChart = true;
     vm.togglePieChart = togglePieChart;
 
+    vm.calcPercentagesList = ['Total Time', 'Wait Time', 'Send Time', 'Receive Time', 'Total Size', 'Request Size', 'Response Size'];
+    vm.calcPercentages = calcPercentages;
+
+    vm.categoryList =  ['all', 'image', 'css', 'font', 'json', 'javascript', 'html', 'other'];
+    vm.filterCategory = filterCategory;
+
     //ui-grid column definitions
     vm.columns = [
       {field: 'request.method', displayName: 'Method', width: 90},
@@ -52,6 +58,15 @@
       vm.showPieChart = !vm.showPieChart;
     }
 
+    function calcPercentages(targetField){
+      vm.pieData = DashboardService.calcPercentages(targetField);
+    }
+
+    function filterCategory(category){
+      vm.data = DashboardService.filterCategory(category);
+      vm.gridOptions.data = vm.data.requests;
+    }
+
     function fileGrabOnChange () {
       processData(fileGrab);
     }
@@ -59,7 +74,7 @@
     function uploadFile (){
       $timeout(function(){
         fileGrab.click();
-      });
+      }, 300);
     }
 
     function processData(fileGrab){
